@@ -1,88 +1,103 @@
-NormalParticle[] hello;
- Jumbo okay = new Jumbo(250,250);
-  oddball hola = new oddball(0,500);
- void setup()   
- {     
-   size(500,500);
-   hello = new NormalParticle[100];
-   for(int i=0; i<hello.length;i++){
-       hello[i]= new NormalParticle(250,250); 
-   }
- }   
- void draw()   
- {    
-   
-    background(0);
-   for(int i=0;i<hello.length;i++){
-       hello[i].show();
-       hello[i].move();
-   }
-  
-   okay.show();
-   okay.move();
+Particle[] hello;
  
-  hola.show();
-   hola.move();
-   
-   
- }  
- class NormalParticle    
+ void setup()   
+ 
  {     
-   double myX, myY; 
-   double myAngle,mySpeed;
-   NormalParticle(int x,int y){
-     myX=x;
-     myY=y;
+   
+   size(500,500);
+   
+   hello = new Particle[100];
+   
+   for(int i=0;i<hello.length;i++)
+   
+   {
+      
+     hello[i]= new NormalParticle(); 
+   
+   }
+   
+   hello[0]=new oddball();
+
+   hello[1]=new Jumbo();
+   
+ }    
+ void draw()
+
+{
+
+  background(0);
+
+  for (int i=0; i<hello.length; i++) {
+
+    hello[i].move();
+
+    hello[i].show();
+
+  }
+
+}
+ 
+ 
+
+ 
+
+ class NormalParticle implements Particle    
+ {     
+   double myX, myY, myAngle,mySpeed;
+   NormalParticle(){
+     myX=250;
+     myY=250;
      mySpeed=(Math.random());
      myAngle=Math.random()*10;
     
    }
    
- void move(){
+ public void move(){
       myX = myX+(Math.cos(myAngle) * mySpeed);
       myY = myY+(Math.sin(myAngle) * mySpeed);
   }
    
-   void show(){
+   public void show(){
    
     ellipse((float)myX,(float)myY,10,10);
    }
    
  }
  
- class Jumbo  
+  
+ interface Particle
+
+{
+
+  public void show();
+
+  public void move();
+
+}
+ 
+ 
+ class oddball implements Particle
  {     
-   double myX, myY; 
-   double myAngle,mySpeed;
-   Jumbo(int x,int y){
-     myX=x;
-     myY=y;
-     mySpeed=(Math.random());
-     myAngle=Math.random()*10;  
+   float myX, myY; 
+   //double mySpeed;
+   oddball(){
+    myX=250;
+    myY=250;
    } 
- void move(){
-      myX = myX+(Math.cos(myAngle) * mySpeed);
-      myY = myY+(Math.sin(myAngle) * mySpeed);
-  } 
-   void show(){
+ public void move(){
+        myX=(int)(Math.random()*500);
+        myY=(int)(Math.random()*500);  
+} 
+ public void show(){
+    ellipse((float)myX,(float)myY,50,50);
+   }
+ } 
+ 
+  class Jumbo extends NormalParticle  
+ {     
+   public void show(){
     ellipse((float)myX,(float)myY,50,50);
    }
  } 
  
   
- class oddball
- {     
-   float myX, myY; 
-   double mySpeed;
-   oddball(int x,int y){
-    myX=x;
-    myY=y;
-   } 
- void move(){
-        myX=(int)(Math.random()*500);
-        myY=(int)(Math.random()*500);  
-} 
-   void show(){
-    ellipse((float)myX,(float)myY,50,50);
-   }
- } 
